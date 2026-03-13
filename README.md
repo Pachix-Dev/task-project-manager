@@ -39,8 +39,12 @@ Nota: los scripts del backend cargan variables con `node --env-file=.env` (Node.
 Frontend ([frontend/.env.example](frontend/.env.example))
 
 ```env
-API_BASE_URL_SERVER=http://localhost:3001/api -> para docker
-NEXT_PUBLIC_API_BASE_URL=http://localhost:3001/api  -> para tu localhost sin docker
+# URL usada por Next.js cuando corre dentro de Docker
+# (los contenedores se comunican por nombre de servicio)
+API_BASE_URL_SERVER=http://backend:3001/api
+
+# URL pública usada por el navegador en desarrollo local sin Docker
+NEXT_PUBLIC_API_BASE_URL=http://localhost:3001/api
 ```
 
 ## Instalacion de dependencias
