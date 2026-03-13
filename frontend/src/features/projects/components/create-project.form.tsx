@@ -38,24 +38,27 @@ export function CreateProjectForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 rounded-lg border border-ink/10 bg-white/80 p-4">
-      <h3 className="font-semibold text-ink">Nuevo proyecto</h3>
+    <form onSubmit={handleSubmit} className="space-y-4 rounded-2xl border border-white/70 bg-white/75 p-5 shadow-sm backdrop-blur md:p-6">
+      <div>
+        <h3 className="text-lg font-semibold text-[var(--ink-900)]">Nuevo proyecto</h3>
+        <p className="mt-1 text-sm text-[var(--ink-700)]">Registra el proyecto y empieza a agregar tareas.</p>
+      </div>
       <input
         value={name}
         onChange={(event) => setName(event.target.value)}
         placeholder="Nombre"
-        className="w-full rounded-md border border-ink/20 px-3 py-2 text-sm"
+        className="w-full rounded-lg border border-[var(--ink-700)]/25 bg-white px-3 py-2.5 text-sm text-[var(--ink-900)] outline-none ring-0 placeholder:text-[var(--ink-700)]/70 focus:border-[var(--brand-500)] focus:shadow-[0_0_0_3px_rgba(43,157,176,0.2)]"
       />
       <textarea
         value={description}
         onChange={(event) => setDescription(event.target.value)}
         placeholder="Descripción"
-        className="w-full rounded-md border border-ink/20 px-3 py-2 text-sm"
+        className="w-full rounded-lg border border-[var(--ink-700)]/25 bg-white px-3 py-2.5 text-sm text-[var(--ink-900)] outline-none ring-0 placeholder:text-[var(--ink-700)]/70 focus:border-[var(--brand-500)] focus:shadow-[0_0_0_3px_rgba(43,157,176,0.2)]"
         rows={3}
       />
       <button
         disabled={isSubmitting}
-        className="rounded-md bg-amber px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
+        className="rounded-lg bg-[var(--accent-500)] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isSubmitting ? "Guardando..." : "Crear proyecto"}
       </button>

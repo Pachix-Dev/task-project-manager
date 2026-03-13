@@ -29,7 +29,7 @@ export function CompleteTaskButton({ taskId }: CompleteTaskButtonProps) {
 
   return (
     <button
-      className="rounded-md bg-signal px-3 py-1 text-sm font-medium text-white disabled:opacity-60"
+      className="rounded-lg bg-[var(--brand-600)] px-3 py-1.5 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
       disabled={isSubmitting}
       onClick={handleComplete}
     >

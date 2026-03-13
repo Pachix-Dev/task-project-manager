@@ -7,10 +7,13 @@ export function ProgressBar({ value }: ProgressBarProps) {
 
   return (
     <div>
-      <div className="mb-2 text-sm font-medium text-ink">Progreso: {safeValue}%</div>
-      <div className="h-3 w-full overflow-hidden rounded-full bg-ink/10">
+      <div className="mb-2 flex items-center justify-between text-sm font-semibold text-[var(--ink-700)]">
+        <span>Progreso</span>
+        <span>{safeValue}%</span>
+      </div>
+      <div className="h-3.5 w-full overflow-hidden rounded-full bg-[var(--ink-700)]/15">
         <div
-          className="h-full bg-signal transition-all duration-500"
+          className="h-full bg-gradient-to-r from-[var(--brand-600)] to-[var(--brand-500)] transition-all duration-500"
           style={{ width: `${safeValue}%` }}
         />
       </div>

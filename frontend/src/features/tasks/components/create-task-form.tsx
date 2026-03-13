@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { type FormEvent, useState } from "react";
 import { createTask } from "@/services/task-api";
 import { sileo } from "sileo";
 
@@ -15,7 +15,7 @@ export function CreateTaskForm({ projectId }: CreateTaskFormProps) {
   const [description, setDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!title.trim()) {
       return;
@@ -37,24 +37,27 @@ export function CreateTaskForm({ projectId }: CreateTaskFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 rounded-lg border border-ink/10 bg-white/80 p-4">
-      <h3 className="font-semibold text-ink">Nueva tarea</h3>
+    <form onSubmit={handleSubmit} className="space-y-4 rounded-2xl border border-white/70 bg-white/75 p-5 shadow-sm backdrop-blur md:p-6">
+      <div>
+        <h3 className="text-lg font-semibold text-[var(--ink-900)]">Nueva tarea</h3>
+        <p className="mt-1 text-sm text-[var(--ink-700)]">Agrega trabajo al proyecto y mantén el avance en movimiento.</p>
+      </div>
       <input
         value={title}
         onChange={(event) => setTitle(event.target.value)}
         placeholder="Titulo"
-        className="w-full rounded-md border border-ink/20 px-3 py-2 text-sm"
+        className="w-full rounded-lg border border-[var(--ink-700)]/25 bg-white px-3 py-2.5 text-sm text-[var(--ink-900)] outline-none ring-0 placeholder:text-[var(--ink-700)]/70 focus:border-[var(--brand-500)] focus:shadow-[0_0_0_3px_rgba(43,157,176,0.2)]"
       />
       <textarea
         value={description}
         onChange={(event) => setDescription(event.target.value)}
         placeholder="Descripcion"
-        className="w-full rounded-md border border-ink/20 px-3 py-2 text-sm"
+        className="w-full rounded-lg border border-[var(--ink-700)]/25 bg-white px-3 py-2.5 text-sm text-[var(--ink-900)] outline-none ring-0 placeholder:text-[var(--ink-700)]/70 focus:border-[var(--brand-500)] focus:shadow-[0_0_0_3px_rgba(43,157,176,0.2)]"
         rows={3}
       />
       <button
         disabled={isSubmitting}
-        className="rounded-md bg-amber px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
+        className="rounded-lg bg-[var(--accent-500)] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isSubmitting ? "Guardando..." : "Crear tarea"}
       </button>
