@@ -9,7 +9,7 @@ interface ProjectMetrics {
   totalTasks: number;
   completedTasks: number;
   progressPercentage: number;
-  averageCompletionTimeInHours: number | null;
+  averageCompletionTimeMmSs: string | null;
 }
 
 export class ProjectService {
@@ -45,30 +45,34 @@ export class ProjectService {
     const progressPercentage =
       totalTasks === 0 ? 0 : Number(((completedTasks / totalTasks) * 100).toFixed(2));
 
-    const averageCompletionTimeInHours = this.computeAverageCompletionHours(tasks);
+    const averageCompletionTimeMmSs = this.computeAverageCompletionTimeMmSs(tasks);
 
     return {
       projectId,
       totalTasks,
       completedTasks,
       progressPercentage,
-      averageCompletionTimeInHours
+      averageCompletionTimeMmSs
     };
   }
 
-  private computeAverageCompletionHours(tasks: Task[]): number | null {
+  private computeAverageCompletionTimeMmSs(tasks: Task[]): string | null {
     const durations = tasks
       .filter((task) => task.status === "completed" && task.completedAt)
       .map((task) => {
         const completedAt = task.completedAt as Date;
-        return (completedAt.getTime() - task.createdAt.getTime()) / 36e5;
+        return completedAt.getTime() - task.createdAt.getTime();
       });
 
     if (durations.length === 0) {
       return null;
     }
 
-    const average = durations.reduce((acc, current) => acc + current, 0) / durations.length;
-    return Number(average.toFixed(2));
+    const averageMs = durations.reduce((acc, current) => acc + current, 0) / durations.length;
+    const totalSeconds = Math.round(averageMs / 1e3);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+
+    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
   }
 }

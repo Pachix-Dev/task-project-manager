@@ -49,7 +49,7 @@ describe("ProjectService", () => {
     const metrics = await service.getProjectMetrics(1);
 
     expect(metrics.progressPercentage).toBe(0);
-    expect(metrics.averageCompletionTimeInHours).toBeNull();
+    expect(metrics.averageCompletionTimeMmSs).toBeNull();
   });
 
   it("calculates metrics using only completed tasks", async () => {
@@ -90,6 +90,6 @@ describe("ProjectService", () => {
     expect(metrics.totalTasks).toBe(2);
     expect(metrics.completedTasks).toBe(1);
     expect(metrics.progressPercentage).toBe(50);
-    expect(metrics.averageCompletionTimeInHours).toBe(2);
+    expect(metrics.averageCompletionTimeMmSs).toBe("120:00");
   });
 });
