@@ -96,6 +96,10 @@ npm test
 
 - CSR/Client Components: formularios para crear tareas y proyectos, boton para completar tareas, porque deben tener interección fluida con el cliente.
 
+## Projects list screen
+
+![Projects list](docs/screenshots/projects-list.png)
+
 ## Docker
 
 Levantar todos los servicios:
