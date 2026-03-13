@@ -89,3 +89,46 @@ Backend:
 cd backend
 npm test
 ```
+
+## SSR y CSR en Next.js
+
+- SSR/Server Components: layout global y pagina raiz, pagina de detalle, ProjectList,TaskList, porque hacen fetch de datos y esto es mejor hacerlo del lado del servidor ya que tiene una mejor carga incial rapida asi reducimos la carga de llamadas innecesarias del lado del cliente
+
+- CSR/Client Components: formularios para crear tareas y proyectos, boton para completar tareas, porque deben tener interección fluida con el cliente.
+
+## Docker
+
+Levantar todos los servicios:
+
+```bash
+docker compose up --build
+```
+
+Servicios:
+
+- Frontend: `http://localhost:3000`
+- Backend: `http://localhost:3001`
+- Health: `http://localhost:3001/health`
+
+## CI/CD de referencia
+
+Pipeline en [ci.yml](.github/workflows/ci.yml):
+
+- Instala dependencias
+- Ejecuta tests backend
+- Compila backend y frontend
+- Incluye job `deploy` placeholder para rama `master`
+
+## Estrategia de despliegue y rollback
+
+- Ambientes: development, staging y production.
+- Despliegue recomendado con imagenes versionadas por tag.
+- Rollback mediante redeploy de la imagen previa estable.
+- Ejecutar migraciones de Prisma en staging antes de production.
+
+## Decisiones tecnicas relevantes
+
+- Arquitectura backend por capas: Controller -> Service -> Repository.
+- Validacion de entrada con Zod en capa HTTP.
+- Manejo de errores uniforme con codigo, mensaje y detalles.
+- Logging estructurado con requestId para trazabilidad.

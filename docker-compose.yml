@@ -1,0 +1,60 @@
+services:
+  db:
+    image: mariadb:11.4
+    container_name: task_project_db
+    environment:
+      MARIADB_DATABASE: projects_db
+      MARIADB_USER: user
+      MARIADB_PASSWORD: password
+      MARIADB_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  phpmyadmin:
+    image: phpmyadmin:5.2-apache
+    container_name: task_project_phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - "8080:80"
+    depends_on:
+      db:
+        condition: service_healthy
+        
+  backend:
+    build:
+      context: ./backend
+    container_name: task_project_backend
+    environment:
+      NODE_ENV: development
+      PORT: 3001
+      DATABASE_URL: mysql://user:password@db:3306/projects_db
+      LOG_LEVEL: info
+      CORS_ORIGIN: http://localhost:3000
+    ports:
+      - "3001:3001"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: task_project_frontend
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:3001/api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  mariadb_data:
