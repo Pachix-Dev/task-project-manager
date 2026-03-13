@@ -113,6 +113,8 @@ Servicios:
 - Frontend: `http://localhost:3000`
 - Backend: `http://localhost:3001`
 - Health: `http://localhost:3001/health`
+- MariaDb: `http://localhost:3306/`
+- phpMyadmin: `http://localhost:8080/`
 
 ## CI/CD de referencia
 
